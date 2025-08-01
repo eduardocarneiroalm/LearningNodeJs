@@ -1,7 +1,13 @@
 //forma tradicional de se utilizar o protocolo http
 
 // import http from "http";
-import express from "express";
+import express from 'express';
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const app = express();
 
 // const server = http.createServer((req, res) => {
 //     res.end("Olá, sou do servidor!")
@@ -9,14 +15,12 @@ import express from "express";
 
 // console.log("Servidor está rodando...")
 
-const app = express();
-
 app.get("/", (req, res) => {
-    res.send("Seja bem-vindo ao meu app!") // .send - vai enviar uma mensagem na rota, uma resposta(RESPONSE)
+    res.sendFile( __dirname + "/html/index.html"); // .send - vai enviar uma mensagem na rota, uma resposta(RESPONSE)
 });
 
 app.get("/sobre", (req, res) => {// req - é o que você recebe; res - objeto que você manda mensagem para o cliente.
-    res.send("minha pagina sobre");
+    res.sendFile(__dirname + "/html/sobre.html");
 })
 
 app.get("/blog", (req, res) => {
