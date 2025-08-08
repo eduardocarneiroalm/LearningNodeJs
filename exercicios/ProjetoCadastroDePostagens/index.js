@@ -2,6 +2,7 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
+const Post = require('./models/Post')
 
 const app = express();
 const port = 8083;
@@ -18,12 +19,26 @@ const port = 8083;
     app.use(bodyParser.json());
 
 //rotas
+app.get('/', (req, res) => {
+    Post.findAll().then((posts) => {
+        res.render('home', {posts: posts})
+    })
+    
+})
+
 app.get('/cad', (req, res) => {
     res.render('formulario');
 });
 
 app.post('/add', (req, res) => {
-    res.send("Titulo: " + req.body.titulo + ", conteudo: " + req.body.conteudo)
+    Post.create({
+        titulo: req.body.titulo,
+        conteudo: req.body.conteudo
+    }).then(() => {
+        res.redirect('/')
+    }).catch((error) => {
+        res.send('Houve um erro: ' + error)
+    })
 })
 
 app.listen(port, () => {

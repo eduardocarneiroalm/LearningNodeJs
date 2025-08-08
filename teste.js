@@ -19,7 +19,7 @@ Postagem.create({
     conteudo: "conteudo qualquer"
 })
 
-const Usuario = sequelize.define('usuarios', {
+const Usuario = sequelize.define('usuarios', {// criando tabela
     nome: {
         type: Sequelize.STRING
     },
